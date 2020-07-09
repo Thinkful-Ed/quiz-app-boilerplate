@@ -7,12 +7,12 @@ const store = {
   // 5 or more questions are required
   questions: [
     {
-      question: 'What is an example of semantic HTML',
+      question: 'Which HTML container is semantic?',
       answers: [
-        '<div>',
-        '<img>',
-        '<span>',
-        '<footer>'
+        'div',
+        'img',
+        'span',
+        'footer'
       ],
       correctAnswer: '<footer>'
     },
@@ -62,10 +62,6 @@ const store = {
   score: 0
 };
 
-function main() {
-  generateView("start");
-}
-
 /**
  * 
  * Technical requirements:
@@ -86,22 +82,55 @@ function main() {
 // These functions return HTML templates
 
 function generateStartView() {
-  //return start view html
+  return `
+  <div id="start-page">
+    <p>The quiz tests your knowledge of the first few weeks of class.</p>
+    <button class="start">START</button>
+  </div>`;
 }
 function generateQuestionView() {
-  //generate question html
-  //inject store data into question
+  let answers = store.questions[store.questionNumber].answers;
+  return `
+    <div id="question-page">
+    <div id="question-count">Question ${store.questionNumber + 1} of ${store.questions.length}</div>
+    <h2 id="question">${store.questions[store.questionNumber].question}</h2>
+    <form action="submit">
+      <ul id="answers">
+        <li><input type="radio" name="" id="" />${answers[0]}</li>
+        <li><input type="radio" name="" id="" />${answers[1]}</li>
+        <li><input type="radio" name="" id="" />${answers[2]}</li>
+        <li><input type="radio" name="" id="" />${answers[3]}</li>
+      </ul>
+      <div>
+      <p id="count">5/5</p>
+      <button id="submit">submit</button>
+      </div>
+    </form>
+    </div>`;
 }
 function generateEndView() {
-  //return end view html
+  return `  
+    <div id="end-quiz">
+      <h2>You scored a ${store.score} out of ${store.questions.length}</h2>
+      <button id="restart">RESTART</button>
+    </div>`;
 }
 
 /********** RENDER FUNCTION(S) **********/
 
-// This function conditionally replaces the contents of the <main> tag based on the state of the store
-function render() {
-  //Based on id call view functions below
-  //Render html
+//Renders the start screen
+function renderStartView() {
+  $('main').html(generateStartView);
+}
+
+//Renders the end screen
+function renderEndView() {
+  $('main').html(generateEndView);
+}
+
+//Renders the question view
+function renderQuestionView() {
+  $('main').html(generateQuestionView);
 }
 
 /********** EVENT HANDLER FUNCTIONS **********/
@@ -110,10 +139,18 @@ function render() {
 
 function updateQuestionView() {}
 
-function startQuiz() {}
+function startQuiz() {
+  renderQuestionView();
+}
 
 function toggleAnswer() {}
 
 function submitAnswer() {}
 
 function nextQuestion() {}
+
+function initialize() {
+  $('header h1').text('Course Review Quiz');
+  renderStartView();
+}
+$(initialize);
