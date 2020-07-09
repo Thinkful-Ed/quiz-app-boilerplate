@@ -126,21 +126,21 @@ function generateQuestionReviewView(selectedAnswer) {
   <form>
     <ul id="answers">`;
     //For each answer, check if it's right or wrong and highlight it appriorately
-    question.answers.forEach(answer => {
-      //answer right
-      if(answer === question.correctAnswer) {
-        html += `<li class="correct-answer"><input type="radio" name="answer" id="" value="${answer}"/>${answer}</li>`;
-      }
-      //answer wrong and user selected
-      else if(answer !== question.correctAnswer && answer === selectedAnswer) {
-         html += `<li><input class="wrong-answer" type="radio" name="answer" id="" value="${answer}"/>${answer}</li>`
-      }
-      //answer wrong
-      else {
-        html += `<li><input class="correct-answer" type="radio" name="answer" id="" value="${answer}"/>${answer}</li>`;
-      }
-    });
-    html += `
+  question.answers.forEach(answer => {
+    //answer right
+    if(answer === question.correctAnswer) {
+      html += `<li class="correct-answer"><input type="radio" name="answer" id="" value="${answer}"/>${answer}</li>`;
+    }
+    //answer wrong and user selected
+    else if(answer !== question.correctAnswer && answer === selectedAnswer) {
+      html += `<li><input class="wrong-answer" type="radio" name="answer" id="" value="${answer}"/>${answer}</li>`;
+    }
+    //answer wrong
+    else {
+      html += `<li><input class="correct-answer" type="radio" name="answer" id="" value="${answer}"/>${answer}</li>`;
+    }
+  });
+  html += `
             </ul>
             <div>
             <p id="count">5/5</p>
@@ -148,7 +148,7 @@ function generateQuestionReviewView(selectedAnswer) {
             </div>
             </form>
             </div>`;
-    return html;
+  return html;
 }
 
 //Generates end screen
@@ -204,7 +204,8 @@ function initialize() {
   $('main').on('click', '.start', renderQuestionView);
   $('header h1').text('Course Review Quiz');
   $('main').on('submit', 'form', submitAnswer);
-  renderQuestionView();
+  renderStartView();
+  // renderQuestionView();
 
 }
 $(initialize);

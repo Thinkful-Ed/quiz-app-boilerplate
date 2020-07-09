@@ -14,7 +14,7 @@ input{
 }
 
 .correct-answer {
-  text-decoration: line-through;
+  background-color: green;
 }
 
 .wrong-answer {
