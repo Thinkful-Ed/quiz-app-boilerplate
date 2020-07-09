@@ -99,10 +99,10 @@ function generateQuestionView() {
     <h2 id="question">${store.questions[store.questionNumber].question}</h2>
     <form>
       <ul id="answers">
-        <li><input type="radio" name="answer" id="" value="${answers[0]}"/>${answers[0]}</li>
-        <li><input type="radio" name="answer" id="" value="${answers[1]}"/>${answers[1]}</li>
-        <li><input type="radio" name="answer" id="" value="${answers[2]}"/>${answers[2]}</li>
-        <li><input type="radio" name="answer" id="" value="${answers[3]}"/>${answers[3]}</li>
+        <li><input type="radio" name="answer" id="" value="${answers[0]}" checked= "checked"/>${answers[0]}</li>
+        <li><input type="radio" name="answer" id="" value="${answers[1]}" checked= "checked"/>${answers[1]}</li>
+        <li><input type="radio" name="answer" id="" value="${answers[2]}" checked= "checked"/>${answers[2]}</li>
+        <li><input type="radio" name="answer" id="" value="${answers[3]}" checked= "checked"/>${answers[3]}</li>
       </ul>
       <div>
       <p id="count">Score: ${store.score} out of ${store.questions.length}</p>
@@ -207,6 +207,7 @@ function nextQuestion() {}
 
 //Set up quiz app
 function initialize() {
+  $('main').on('click','input', toggleAnswer); 
   $('header h1').text('Course Review Quiz');
   //Starting quiz event
   $('main').on('click', '.start', startQuiz);
@@ -214,17 +215,26 @@ function initialize() {
   $('main').on('submit', 'form', submitAnswer);
   //Next question event
   $('main').on('click', '#next', nextQuestion);
+
   //Render default screen
   renderQuestionView();
 }
 
 /********** EVENT HELPER FUNCTIONS **********/
-
+// toggle function
+function toggleAnswer(){
+  let inputArr = $('input');
+  for(let i = 0; i < inputArr.length; i++){
+    console.log(inputArr[i].attr("checked", "false"));
+  }
+}
 //Prevent empty answer submissions
 function validateAnswer() {}
 
 //Returns the answer of the selected radio button
-function findAnswer() {}
+function findAnswer() {
+  
+}
 
 //Checks the answer against the correct answer and updates score
 function scoreAnswer(answer) {
