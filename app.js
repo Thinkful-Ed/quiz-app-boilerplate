@@ -96,10 +96,10 @@ function generateQuestionView() {
     <h2 id="question">${store.questions[store.questionNumber].question}</h2>
     <form action="submit">
       <ul id="answers">
-        <li><input type="radio" name="" id="" />${answers[0]}</li>
-        <li><input type="radio" name="" id="" />${answers[1]}</li>
-        <li><input type="radio" name="" id="" />${answers[2]}</li>
-        <li><input type="radio" name="" id="" />${answers[3]}</li>
+        <li><input type="radio" name="answer" id="" value="${answers[0]}"/>${answers[0]}</li>
+        <li><input type="radio" name="answer" id="" value="${answers[1]}"/>${answers[1]}</li>
+        <li><input type="radio" name="answer" id="" value="${answers[2]}"/>${answers[2]}</li>
+        <li><input type="radio" name="answer" id="" value="${answers[3]}"/>${answers[3]}</li>
       </ul>
       <div>
       <p id="count">5/5</p>
@@ -112,7 +112,7 @@ function generateEndView() {
   return `  
     <div id="end-quiz">
       <h2>You scored a ${store.score} out of ${store.questions.length}</h2>
-      <button id="restart">RESTART</button>
+      <button class="start">RESTART</button>
     </div>`;
 }
 
@@ -137,7 +137,9 @@ function renderQuestionView() {
 
 // These functions handle events (submit, click, etc)
 
-function updateQuestionView() {}
+function updateQuestionView() {
+
+}
 
 function startQuiz() {
   renderQuestionView();
@@ -145,12 +147,19 @@ function startQuiz() {
 
 function toggleAnswer() {}
 
-function submitAnswer() {}
+function submitAnswer(event) {
+  event.preventDefault();
+  // console.log($('input [type=radio][name=answer]:checked').val());
+}
 
 function nextQuestion() {}
 
 function initialize() {
+  
+  $('main').on('click', '.start', renderQuestionView);
   $('header h1').text('Course Review Quiz');
+  $('main').on('submit', 'form', submitAnswer);
   renderStartView();
+
 }
 $(initialize);
