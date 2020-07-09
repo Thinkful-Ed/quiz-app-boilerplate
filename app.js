@@ -58,6 +58,7 @@ const store = {
     }
   ],
   quizStarted: false,
+  submittedAnswer: '',
   questionNumber: 0,
   score: 0
 };
@@ -113,31 +114,30 @@ function generateQuestionView() {
 }
 
 //Generates question review screen
-function generateQuestionReviewView(selectedAnswer) {
+function generateQuestionReviewView() {
   let question = store.questions[store.questionNumber];
   let html = `
   <div id="question-page">
   <div id="question-count">Question ${store.questionNumber + 1} of ${store.questions.length}</div>
   <h2 id="question">${question.question}</h2>
-  <h3> You got the question ${(question.correctAnswer === selectedAnswer) ? 'correct!' : 'wrong!'}</h3>
+  <h3> You got the question ${(question.correctAnswer === store.submittedAnswer) ? 'correct!' : 'wrong!'}</h3>
     <ul id="answers-results">`;
     //For each answer, check if it's right or wrong and highlight it appriorately
-    question.answers.forEach(answer => {
-      //answer right
-      if(answer === question.correctAnswer) {
-        html += `<li class="correct-answer">${answer}</li>`;
-      }
-      //answer wrong and user selected
-      else if(answer !== question.correctAnswer && answer === selectedAnswer) {
-         html += `<li class="wrong-answer">${answer}</li>`;
-      }
-      //answer wrong
-      else {
-        html += `<li>${answer}</li>`;
-      }
-    });
-    html += `
-
+  question.answers.forEach(answer => {
+    //answer right
+    if(answer === question.correctAnswer) {
+      html += `<li class="correct-answer">${answer}</li>`;
+    }
+    //answer wrong and user selected
+    else if(answer !== question.correctAnswer && answer === store.submittedAnswer) {
+      html += `<li class="wrong-answer">${answer}</li>`;
+    }
+    //answer wrong
+    else {
+      html += `<li>${answer}</li>`;
+    }
+  });
+  html += `
             </ul>
             <div>
             <p id="count">Score: ${store.score} out of ${store.questions.length}</p>
@@ -158,24 +158,26 @@ function generateEndView() {
 
 /********** RENDER FUNCTION(S) **********/
 
-//Renders the start screen
-function renderStartView() {
-  $('main').html(generateStartView);
-}
-
-//Renders the end screen
-function renderEndView() {
-  $('main').html(generateEndView);
-}
-
-//Renders the question view
-function renderQuestionView() {
-  $('main').html(generateQuestionView());
-}
-
-//Renders the question review view
-function renderQuestionReviewView(selectedAnswer) {
-  $('main').html(generateQuestionReviewView(selectedAnswer));
+//Renders the screen
+function render() {
+  let html = '';
+  //Display quiz description page before quiz starts
+  if(!store.quizStarted) {
+    html += generateStartView();
+  }
+  //End of quiz
+  else if(store.questionNumber === store.questions.length) {
+    html += generateEndView();
+  }
+  //Question results
+  else if(store.submittedAnswer !== '') {
+    html += generateQuestionReviewView();
+  }
+  //Display question
+  else {
+    html += generateQuestionView();
+  }
+  $('main').html(html);
 }
 
 /********** EVENT HANDLER FUNCTIONS **********/
@@ -186,26 +188,33 @@ function renderQuestionReviewView(selectedAnswer) {
 function startQuiz() {
   store.questionNumber = 0;
   store.score = 0;
-  renderQuestionView();
+  store.quizStarted = true;
+  render();
 }
 
 //Submits answer to question, moving to answer review screen
 function submitAnswer(event) {
   event.preventDefault();
   //Retrieve value of selected radio button
-  let answer = findAnswer();
+  store.submittedAnswer = $('input[name=\'answer\']:checked').val();
   //Score the answer against the correct answer
-  scoreAnswer(answer);
+  if (store.submittedAnswer === store.questions[store.questionNumber].correctAnswer) {
+    store.score++;
+  }
   //Render results
-  renderQuestionReviewView(answer);
+  render();
 }
 
 //Switches view to the next question
-function nextQuestion() {}
+function nextQuestion() {
+  store.questionNumber++;
+  store.submittedAnswer = '';
+  render();
+}
 
 //Set up quiz app
 function initialize() {
-
+  //Set quiz title
   $('header h1').text('Course Review Quiz');
   //Starting quiz event
   $('main').on('click', '.start', startQuiz);
@@ -213,23 +222,8 @@ function initialize() {
   $('main').on('submit', 'form', submitAnswer);
   //Next question event
   $('main').on('click', '#next', nextQuestion);
-
   //Render default screen
-  renderStartView();
-}
-
-/********** EVENT HELPER FUNCTIONS **********/
-
-//Returns the answer of the selected radio button
-function findAnswer() {
-  return $('input[name=\'answer\']:checked').val();
-}
-
-//Checks the answer against the correct answer and updates score
-function scoreAnswer(answer) {
-  if (answer === store.questions[store.questionNumber].correctAnswer) {
-    store.score++;
-  }
+  render();
 }
 
 //Initilize quiz when page is loaded
