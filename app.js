@@ -105,7 +105,7 @@ function generateQuestionView() {
         <li><input type="radio" name="answer" id="" value="${answers[3]}"/>${answers[3]}</li>
       </ul>
       <div>
-      <p id="count">5/5</p>
+      <p id="count">Score: ${store.score} out of ${store.questions.length}</p>
       <button type="submit" id="submit">submit</button>
       </div>
     </form>
@@ -114,39 +114,35 @@ function generateQuestionView() {
 
 //Generates question review screen
 function generateQuestionReviewView(selectedAnswer) {
-  console.log(selectedAnswer);
-  console.log(store.questions[store.questionNumber].correctAnswer);
   let question = store.questions[store.questionNumber];
-  let correct = question.answer === selectedAnswer;
   let html = `
   <div id="question-page">
   <div id="question-count">Question ${store.questionNumber + 1} of ${store.questions.length}</div>
   <h2 id="question">${question.question}</h2>
-  <h3> You got the question ${correct ? 'correct!' : 'wrong!'}</h3>
-  <form>
-    <ul id="answers">`;
+  <h3> You got the question ${(question.answer === selectedAnswer) ? 'correct!' : 'wrong!'}</h3>
+    <ul id="answers-results">`;
     //For each answer, check if it's right or wrong and highlight it appriorately
-  question.answers.forEach(answer => {
-    //answer right
-    if(answer === question.correctAnswer) {
-      html += `<li class="correct-answer"><input type="radio" name="answer" id="" value="${answer}"/>${answer}</li>`;
-    }
-    //answer wrong and user selected
-    else if(answer !== question.correctAnswer && answer === selectedAnswer) {
-      html += `<li><input class="wrong-answer" type="radio" name="answer" id="" value="${answer}"/>${answer}</li>`;
-    }
-    //answer wrong
-    else {
-      html += `<li><input class="correct-answer" type="radio" name="answer" id="" value="${answer}"/>${answer}</li>`;
-    }
-  });
-  html += `
+    question.answers.forEach(answer => {
+      //answer right
+      if(answer === question.correctAnswer) {
+        html += `<li class="correct-answer">${answer}</li>`;
+      }
+      //answer wrong and user selected
+      else if(answer !== question.correctAnswer && answer === selectedAnswer) {
+         html += `<li class="wrong-answer">${answer}</li>`;
+      }
+      //answer wrong
+      else {
+        html += `<li>${answer}</li>`;
+      }
+    });
+    html += `
+
             </ul>
             <div>
-            <p id="count">5/5</p>
-            <button id="submit">submit</button>
+            <p id="count">Score: ${store.score} out of ${store.questions.length}</p>
+            <button id="next">NEXT QUESTION</button>
             </div>
-            </form>
             </div>`;
   return html;
 }
@@ -186,26 +182,56 @@ function renderQuestionReviewView(selectedAnswer) {
 
 // These functions handle events (submit, click, etc)
 
+//Switchs to question view for a fresh quiz
 function startQuiz() {
+  store.questionNumber = 0;
+  store.score = 0;
   renderQuestionView();
 }
 
-function toggleAnswer() {}
-
+//Submits answer to question, moving to answer review screen
 function submitAnswer(event) {
   event.preventDefault();
-  renderQuestionReviewView('img');
+  //Prevent empty answers
+  validateAnswer();
+  //Retrieve value of selected radio button
+  let answer = findAnswer();
+  //Score the answer against the correct answer
+  scoreAnswer(answer);
+  //Render results
+  renderQuestionReviewView('footer');
 }
 
+//Switches view to the next question
 function nextQuestion() {}
 
+//Set up quiz app
 function initialize() {
-  
-  $('main').on('click', '.start', renderQuestionView);
   $('header h1').text('Course Review Quiz');
+  //Starting quiz event
+  $('main').on('click', '.start', startQuiz);
+  //Submitting answer event
   $('main').on('submit', 'form', submitAnswer);
-  renderStartView();
-  // renderQuestionView();
-
+  //Next question event
+  $('main').on('click', '#next', nextQuestion);
+  //Render default screen
+  renderQuestionView();
 }
+
+/********** EVENT HELPER FUNCTIONS **********/
+
+//Prevent empty answer submissions
+function validateAnswer() {}
+
+//Returns the answer of the selected radio button
+function findAnswer() {}
+
+//Checks the answer against the correct answer and updates score
+function scoreAnswer(answer) {
+  if (answer === store.questions[store.questionNumber].correctAnswer) {
+    store.score++;
+  }
+}
+
+//Initilize quiz when page is loaded
 $(initialize);
