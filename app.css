@@ -12,3 +12,11 @@ li {
 input{
   margin-right: 3rem;
 }
+
+.correct-answer {
+  text-decoration: line-through;
+}
+
+.wrong-answer {
+  background-color: red;
+}

@@ -14,7 +14,7 @@ const store = {
         'span',
         'footer'
       ],
-      correctAnswer: '<footer>'
+      correctAnswer: 'footer'
     },
     {
       question: 'Which flexbox property spaces elements to opposite sides of the page?',
@@ -81,6 +81,7 @@ const store = {
 
 // These functions return HTML templates
 
+//Generates the start screen
 function generateStartView() {
   return `
   <div id="start-page">
@@ -88,13 +89,15 @@ function generateStartView() {
     <button class="start">START</button>
   </div>`;
 }
+
+//Generates the question screen
 function generateQuestionView() {
   let answers = store.questions[store.questionNumber].answers;
   return `
     <div id="question-page">
     <div id="question-count">Question ${store.questionNumber + 1} of ${store.questions.length}</div>
     <h2 id="question">${store.questions[store.questionNumber].question}</h2>
-    <form action="submit">
+    <form>
       <ul id="answers">
         <li><input type="radio" name="answer" id="" value="${answers[0]}"/>${answers[0]}</li>
         <li><input type="radio" name="answer" id="" value="${answers[1]}"/>${answers[1]}</li>
@@ -103,11 +106,52 @@ function generateQuestionView() {
       </ul>
       <div>
       <p id="count">5/5</p>
-      <button id="submit">submit</button>
+      <button type="submit" id="submit">submit</button>
       </div>
     </form>
     </div>`;
 }
+
+//Generates question review screen
+function generateQuestionReviewView(selectedAnswer) {
+  console.log(selectedAnswer);
+  console.log(store.questions[store.questionNumber].correctAnswer);
+  let question = store.questions[store.questionNumber];
+  let correct = question.answer === selectedAnswer;
+  let html = `
+  <div id="question-page">
+  <div id="question-count">Question ${store.questionNumber + 1} of ${store.questions.length}</div>
+  <h2 id="question">${question.question}</h2>
+  <h3> You got the question ${correct ? 'correct!' : 'wrong!'}</h3>
+  <form>
+    <ul id="answers">`;
+    //For each answer, check if it's right or wrong and highlight it appriorately
+    question.answers.forEach(answer => {
+      //answer right
+      if(answer === question.correctAnswer) {
+        html += `<li class="correct-answer"><input type="radio" name="answer" id="" value="${answer}"/>${answer}</li>`;
+      }
+      //answer wrong and user selected
+      else if(answer !== question.correctAnswer && answer === selectedAnswer) {
+         html += `<li><input class="wrong-answer" type="radio" name="answer" id="" value="${answer}"/>${answer}</li>`
+      }
+      //answer wrong
+      else {
+        html += `<li><input class="correct-answer" type="radio" name="answer" id="" value="${answer}"/>${answer}</li>`;
+      }
+    });
+    html += `
+            </ul>
+            <div>
+            <p id="count">5/5</p>
+            <button id="submit">submit</button>
+            </div>
+            </form>
+            </div>`;
+    return html;
+}
+
+//Generates end screen
 function generateEndView() {
   return `  
     <div id="end-quiz">
@@ -130,16 +174,17 @@ function renderEndView() {
 
 //Renders the question view
 function renderQuestionView() {
-  $('main').html(generateQuestionView);
+  $('main').html(generateQuestionView());
+}
+
+//Renders the question review view
+function renderQuestionReviewView(selectedAnswer) {
+  $('main').html(generateQuestionReviewView(selectedAnswer));
 }
 
 /********** EVENT HANDLER FUNCTIONS **********/
 
 // These functions handle events (submit, click, etc)
-
-function updateQuestionView() {
-
-}
 
 function startQuiz() {
   renderQuestionView();
@@ -149,7 +194,7 @@ function toggleAnswer() {}
 
 function submitAnswer(event) {
   event.preventDefault();
-  // console.log($('input [type=radio][name=answer]:checked').val());
+  renderQuestionReviewView('img');
 }
 
 function nextQuestion() {}
@@ -159,7 +204,7 @@ function initialize() {
   $('main').on('click', '.start', renderQuestionView);
   $('header h1').text('Course Review Quiz');
   $('main').on('submit', 'form', submitAnswer);
-  renderStartView();
+  renderQuestionView();
 
 }
 $(initialize);
