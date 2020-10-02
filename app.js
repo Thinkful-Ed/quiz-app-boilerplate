@@ -92,15 +92,15 @@ function renderQuestion() {
       
       // Show the correct answer text
       $('main').html(`
-        <h1>Answer page</h1>
+        <h1>Correct</h1>
         <p>Correct </p>
         <button class="next">Next</button>
       `)
     } else {
       // Show the incorrect answer text
       $('main').html(`
-        <h1>Answer page</h1>
-        <p>Wrong. The correct answer was ${question.correctAnswer} </p>
+        <h1>Wrong</h1>
+        <p>The correct answer was ${question.correctAnswer} </p>
         <button class="next">Next</button>
       `)
     }
