@@ -6,3 +6,86 @@
   * https://github.com/andreacardybailey/responsive_example/blob/master/styles/responsive-base.css 
   *
 */
+header{
+  border: solid black;
+  border-radius: 10px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.8);
+}
+main{
+  border: solid black;
+  border-radius: 10px;
+  margin-top: 10px;
+  padding: 10px;
+  
+} 
+
+
+}
+.questionContainer{
+  border: solid black;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  padding: 20px;
+   margin: 20px;
+}
+
+.startScreen {
+    margin: 10px;
+    padding: 20px;
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.8);
+   
+}
+
+* {
+    box-sizing: border-box;
+}
+h1{
+  text-align: center;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.container{
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    box-shadow: 80px;
+    
+
+}
+.buttonContainer{
+  float: right;
+}
+.questionContainer{
+    justify-content: center;
+  
+}
+
+.nextButton, .submitButton{
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 10px; 20px;
+    margin-bottom: 0;
+    cursor: pointer;
+    
+}
+
+
+
+body {
+  background-color: burlywood;
+  color: black;
+}
+ 
+ label {
+   display: block;
+ }
+ @media (min-width: 700px) {
+  body {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+ 
