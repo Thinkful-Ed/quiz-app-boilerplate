@@ -119,7 +119,7 @@ function currentQuestionHtml(question){
     <form>
         <h3 class="Question"> ${question.question} </h3>
         <label for="answer-0">
-            <input type="radio" id="answer-0" name="answer" value="${answer[0]}">${answer[0]}
+            <input type="radio" id="answer-0" name="answer" value="${answer[0]}"required>${answer[0]}
           </label>
         <label for="answer-1">
             <input type="radio" id="answer-1" name="answer" value="${answer[1]}">${answer[1]}
