@@ -1,23 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
+    <!--Daniels Branch-->
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Quiz App</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet"
-    type="text/css" />
-  <link href="app.css" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="app.css" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Gotu&family=Roboto:wght@300&family=Sen&display=swap" rel="stylesheet">
+    <title>Frooty Fruit</title>
 </head>
 
 <body>
-  <header>
-    <h1>The name of your quiz</h1>
-  </header>
-  <main></main>
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.js" crossorigin="anonymous"></script>
-  <script src="app.js"></script>
+    <main>
+        <!-- Start Home Page with Flexbox for Images and Start Button -->
+        <div class="startPage">
+            <h1>Welcome to the Frooty Fruit Quiz!</h1>
+
+            <section class="startPageFlex">
+                <div class="startPageFruit">
+                    <div class="fruitPic">
+                        <img src="https://images.unsplash.com/photo-1589606743932-747c74e7330e?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Image of Pineapple"></div>
+                    <div class="fruitPic">
+                        <img src="https://images.unsplash.com/photo-1584209742773-f7b461564449?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80" alt="Image of Kiwi"></div>
+                    <div class="fruitPic">
+                        <img src="https://images.unsplash.com/photo-1580157508103-2a4e9fe8ed29?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=633&q=80" alt="Image of Pomegranate"></div>
+                </div>
+            </section>
+
+            <div class="start-button-center">
+            <button class="start-button">
+          <span class="button-label">Start!</span>
+        </button>
+        </div>
+        </div>
+
+
+
+        <!-- Question Pages -->
+
+        <div id="container">
+
+
+            <!-- this is where JQ will put the questions -->
+
+
+        </div>
+
+
+        <div class="question1">
+          <form>
+              <h2>Question One: Which Fruit is actually a berry?</h2>
+              <input id="apple" name="fruit" type="radio" value="apple">
+              <label for="apple">Apple</label><br>
+              <input id="pineapple" name="fruit" type="radio" value="pineapple">
+              <label for="pineapple">Pineapple</label><br>
+              <input id="kiwi" name="fruit" type="radio" value="kiwi">
+              <label for="kiwi">Kiwi</label><br>
+              <input id="banana" name="fruit" type="radio" value="banana">
+              <label for="banana">Banana</label><br>
+          </form>
+      </div>
+      <div class="question2">
+          <form>
+              <h2>Question Two: Which Fruit is actually made up of a bunch of smaller fruits?</h2>
+              <input id="watermelon" name="fruit" type="radio" value="watermelon">
+              <label for="watermelon">Watermelon</label><br>
+              <input id="raspberry" name="fruit" type="radio" value="raspberry">
+              <label for="raspberry">Raspberry</label><br>
+              <input id="blueberry" name="fruit" type="radio" value="blueberry">
+              <label for="blueberry">Blueberry</label><br>
+              <input id="cantaloupe" name="fruit" type="radio" value="cantaloupe">
+              <label for="cantaloupe">Cantaloupe</label><br>
+          </form>
+      </div>
+      <div class="question3">
+          <form>
+              <h2>Question Three: Which fruit is related to Roses?</h2>
+              <input id="blueberries" name="color" type="radio" value="blueberries">
+              <label for="blueberries">Blueberries</label><br>
+              <input id="plum" name="color" type="radio" value="plum">
+              <label for="plum">Plum</label><br>
+              <input id="watermelon" name="color" type="radio" value="watermelon">
+              <label for="watermelon">Watermelon</label><br>
+              <input id="peaches" name="color" type="radio" value="peaches">
+              <label for="peaches">Peaches</label><br>
+          </form>
+      </div>
+      <div class="question4">
+          <form>
+              <h2>Question Four: Which Fruit was sacred in ancient Egypt?</h2>
+              <input id="honeydew Melon" name="color" type="radio" value="honeydew Melon">
+              <label for="honeydew Melon">Honeydew Melon</label><br>
+              <input id="pomegranate" name="color" type="radio" value="pomegranate">
+              <label for="pomegranate">Pomegranate</label><br>
+              <input id="kiwis" name="color" type="radio" value="kiwis">
+              <label for="kiwis">Kiwis</label><br>
+              <input id="pears" name="color" type="radio" value="pears">
+              <label for="pears">Pears</label><br>
+          </form>
+      </div>
+      <div class="question5">
+          <form>
+              <h2>Question Five: Which fruit has air pockets in it that allow it to “float” and “bounce”?</h2>
+              <input id="blackberries" name="color" type="radio" value="blackberries">
+              <label for="blackberries">Blackberries</label><br>
+              <input id="elderberries" name="color" type="radio" value="elderberries">
+              <label for="elderberries">Elderberries</label><br>
+              <input id="strawberries" name="color" type="radio" value="strawberries">
+              <label for="strawberries">Strawberries</label><br>
+              <input id="cranberries" name="color" type="radio" value="cranberries">
+              <label for="cranberries">Cranberries</label><br>
+          </form>
+      </div>
+
+
+
+        <!-- Ending Page -->
+        <div class="endPage">
+            <h1>Great Job!</h1>
+
+            <!-- Here will will display how many they got correct!-->
+
+            <!-- Button to start Quiz Over -->
+            <button class="play-again-button">
+          <span class="button-label">Play Again!</span>
+        </button>
+        </div>
+
+
+    </main>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.js" crossorigin="anonymous"></script>
+    <script src="app.js"></script>
 </body>
 
 </html>
